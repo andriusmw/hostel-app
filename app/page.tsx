@@ -7,7 +7,8 @@ import Link from "next/link";
 //-------------------------------CONSTS & TYPES --------------------------------------------
 //-------------------------------------------------------------------------------------------
 
-// Define tipos para la respuesta de NewsAPI
+// Define la estructura del objeto , tanto de la respuesta como de cada noticia dentro del array
+// de noticias de la respuesta.
 interface Article {
   source: {
     id: string | null;
@@ -28,7 +29,7 @@ interface NewsApiResponse {
   articles: Article[];
 }
 
-//--------------------------------------PAGE -----------------------------------------------
+//-------------------------------------- EXPORT -----------------------------------------------
 //-------------------------------------------------------------------------------------------
 
 export default async function Home() {
@@ -75,8 +76,49 @@ export default async function Home() {
   return (
     <section className="flex justify-center items-center gap-x-4 min-h-screen">
       {/* Estilos para centrar el contenido */}
+
       <div className="w-full max-w-2xl p-4">
-    </div>
+        <h1 className="text-2xl font-bold mb-4 text-center">Home - Noticias de BBC</h1>
+
+          {/* Esto por si hay error */}
+        {error ? ( 
+          <p className="text-red-500 text-center">{error}</p>
+        ) : (
+          <ul className="space-y-4">
+
+            {/* Para vista vacía */}
+            {news.length === 0 ? (
+              <p className="text-gray-500 text-center">No se encontraron noticias</p>
+
+            ) : (
+              news.map((article, index) => (
+                //ponemos index como key porque en la doc de la api hemos visto que algunos id pueden venir como null
+                <li key={index} className="border p-4 rounded shadow hover:bg-gray-50">
+                  <h2 className="text-xl font-semibold">{article.title}</h2>
+                  <p className="text-gray-600">{article.description || "Sin descripción"}</p>
+                  <Link
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    Leer más
+                  </Link>
+                  <p>{article.publishedAt}</p>
+                </li>
+
+              ))
+            )}
+
+          </ul>
+        )}
+
+        <div className="mt-4 flex justify-center">
+
+          <ThemeSwitcher />
+
+        </div>
+      </div>
     </section>
   );
 }
