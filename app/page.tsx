@@ -1,4 +1,5 @@
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -6,7 +7,8 @@ export default function Home() {
     
 
       <section>
-        probando
+        <p>Home</p>
+        <Link className="underline text-slate-600"  href="/news">Noticias</Link>
       </section>
         
    
