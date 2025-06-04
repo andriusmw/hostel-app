@@ -1,6 +1,14 @@
+/*------------------------------------------- IMPORTS ------------------------------------*/
+/*----------------------------------------------------------------------------------------*/
+
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+
+import { ThemeProvider } from "@/components/theme-provider";
+
+/*------------------------------------------- CONSTS -------------------------------------*/
+/*----------------------------------------------------------------------------------------*/
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,6 +26,9 @@ export const metadata: Metadata = {
   description: "Generated using Next.js 14.2.15",
 };
 
+/*-------------------------------- EXPORT ---------------------------------------*/
+/*-------------------------------------------------------------------------------*/
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,10 +36,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* el ThemeProvider envuelve a children para aplicarle el tema 
+          igual que react-router envuelve toda la app para que funcionen las redireciones en toda la app  */}
+     
+        <ThemeProvider
+           attribute="class"
+           defaultTheme="system"
+           enableSystem
+           disableTransitionOnChange
+        >
         {children}
+        </ThemeProvider>
       </body>
     </html>
   );
