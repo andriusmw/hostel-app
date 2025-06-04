@@ -6,6 +6,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import Link from "next/link";
+import Navbar from "@/components/navbar";
 
 /*------------------------------------------- CONSTS -------------------------------------*/
 /*----------------------------------------------------------------------------------------*/
@@ -45,7 +47,9 @@ export default function RootLayout({
            defaultTheme="system"
            enableSystem
            disableTransitionOnChange
-        >
+        > 
+            <Navbar/>
+           
         {children}
         </ThemeProvider>
       </body>

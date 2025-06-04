@@ -6,9 +6,10 @@ export default function Home() {
   
     
 
-      <section>
-        <p>Home</p>
-        <Link className="underline text-slate-600"  href="/news">Noticias</Link>
+      <section className="flex justify-center items-center gap-x-4">
+          {/* estilos para que quede centrado */}
+       
+        <h1>Home</h1>
       </section>
         
    
