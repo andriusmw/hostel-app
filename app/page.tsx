@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
+import CategoryList from "../components/category-list"
 
 //-------------------------------CONSTS & TYPES --------------------------------------------
 //-------------------------------------------------------------------------------------------
@@ -89,6 +90,8 @@ export default async function Home() {
     <section className="my-8 px-2 lg:px-16">
       {/* Estilos para centrar el contenido */}
 
+
+        <CategoryList></CategoryList>
       
         <h1 className="text-3xl md:text-4x1 font-bold tracking-tight text-rpimary 
           text-center mb-10" >
