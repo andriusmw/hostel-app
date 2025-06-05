@@ -76,17 +76,19 @@ export default async function Home() {
 
   // Renderizado
   return (
-    <section className="flex justify-center items-center gap-x-4 min-h-screen">
+    <section className="my-8 px-2 lg:px-16">
       {/* Estilos para centrar el contenido */}
 
-      <div className="w-full max-w-2xl p-4">
-        <h1 className="text-2xl font-bold mb-4 text-center">Noticias de BBC News</h1>
+      
+        <h1 className="text-3x1 md:text-4x1 font-bold tracking-tight text-rpimary 
+          text-center mb-10">
+              Noticias de BBC News</h1>
 
           {/* Esto por si hay error */}
         {error ? ( 
           <p className="text-red-500 text-center">{error}</p>
         ) : (
-         <>
+         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3-gap-6">
 
             {/* Para vista vacía */}
             {news.length === 0 ? (
@@ -95,7 +97,8 @@ export default async function Home() {
             ) : (
               news.map((article, index) => (
                 //ponemos index como key porque en la doc de la api hemos visto que algunos id pueden venir como null
-                <Card key={index} className="border p-4 rounded shadow hover:bg-gray-50">
+                <Card key={index} className="rounded-lg overflow-hidden shadow-lg hover:shadow-2x1 transition-shadow"
+                style={{ margin: "5px", marginBottom: "10px" }}>
                    <div className="relative w-full h-48">
                   {article.urlToImage ? (
                     <Image
@@ -105,7 +108,7 @@ export default async function Home() {
                     className="rounded-t-lg object-cover"
                     />
                     ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-lg">
+                  <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-2x1 transition-shadow">
                   <span className="text-gray-500">No Image</span>
                  </div>
                  
@@ -131,7 +134,7 @@ export default async function Home() {
               ))
             )}
 
-        </>
+        </div>
         )}
 
         <div className="mt-4 flex justify-center">
@@ -139,7 +142,7 @@ export default async function Home() {
           <ThemeSwitcher />
 
         </div>
-      </div>
+      
     </section>
   );
 }
