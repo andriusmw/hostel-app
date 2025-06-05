@@ -2,6 +2,8 @@
 //------------------------------------------------------------------------------------------
 
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
 import Link from "next/link";
 
 //-------------------------------CONSTS & TYPES --------------------------------------------
@@ -37,9 +39,7 @@ export default async function Home() {
   const baseUrl = process.env.BASE_URL;
   const source = process.env.SOURCE;
   const apiKey = process.env.API_KEY;
-  console.log("BASE_URL:", process.env.BASE_URL);
-  console.log("SOURCE:", process.env.SOURCE);
-  console.log("API_KEY:", process.env.API_KEY);
+
   const url = `${baseUrl}?sources=${source}&apiKey=${apiKey}`;
 
   // Variables para datos y errores
@@ -50,6 +50,8 @@ export default async function Home() {
   try {
     const res = await fetch(url, { cache: "no-store" });
                       // al añadir no-store simula SSR porque no lo guarda en el cliente.
+                      // carga datos frescos con cada llamada
+                      // carga desde el servidor. 
 
     // Verifica si la respuesta es exitosa
     if (!res.ok) {
@@ -66,7 +68,7 @@ export default async function Home() {
 
     // Guarda los artículos
     news = data.articles;
-    console.log(news)
+    //console.log(news)
   } catch (err) {
     console.error("Error fetching latest news:", err);
     error = err instanceof Error ? err.message : "Error al cargar noticias";
@@ -78,13 +80,13 @@ export default async function Home() {
       {/* Estilos para centrar el contenido */}
 
       <div className="w-full max-w-2xl p-4">
-        <h1 className="text-2xl font-bold mb-4 text-center">Home - Noticias de BBC</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Noticias de BBC News</h1>
 
           {/* Esto por si hay error */}
         {error ? ( 
           <p className="text-red-500 text-center">{error}</p>
         ) : (
-          <ul className="space-y-4">
+         <>
 
             {/* Para vista vacía */}
             {news.length === 0 ? (
@@ -93,7 +95,24 @@ export default async function Home() {
             ) : (
               news.map((article, index) => (
                 //ponemos index como key porque en la doc de la api hemos visto que algunos id pueden venir como null
-                <li key={index} className="border p-4 rounded shadow hover:bg-gray-50">
+                <Card key={index} className="border p-4 rounded shadow hover:bg-gray-50">
+                   <div className="relative w-full h-48">
+                  {article.urlToImage ? (
+                    <Image
+                     src={article.urlToImage}
+                     alt={article.title}
+                     fill
+                    className="rounded-t-lg object-cover"
+                    />
+                    ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-lg">
+                  <span className="text-gray-500">No Image</span>
+                 </div>
+                 
+                  )}
+                  </div>
+
+                  <CardContent>
                   <h2 className="text-xl font-semibold">{article.title}</h2>
                   <p className="text-gray-600">{article.description || "Sin descripción"}</p>
                   <Link
@@ -105,12 +124,14 @@ export default async function Home() {
                     Leer más
                   </Link>
                   <p>{article.publishedAt}</p>
-                </li>
+                  </CardContent>
+               
+                </Card>
 
               ))
             )}
 
-          </ul>
+        </>
         )}
 
         <div className="mt-4 flex justify-center">

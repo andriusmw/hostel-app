@@ -12,7 +12,7 @@ export default async function Navbar() {
                 </Link>
                 <div className="flex max-lg:hidden flex-col items-center gap-6">
                     <Button variant={"ghost"}>
-                        <Link href="/news">Noticias</Link>
+                       
                         <Link href="/categories">Categorías</Link>
                     </Button>
                 </div>
