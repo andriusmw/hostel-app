@@ -90,9 +90,11 @@ export default async function Home() {
     <section className="my-8 px-2 lg:px-16">
       {/* Estilos para centrar el contenido */}
 
-
+      <ThemeSwitcher />
         <CategoryList></CategoryList>
       
+     
+
         <h1 className="text-3xl md:text-4x1 font-bold tracking-tight text-rpimary 
           text-center mb-10" >
               BBC's News</h1>
@@ -168,7 +170,7 @@ export default async function Home() {
 
         <div className="mt-4 flex justify-center">
 
-          <ThemeSwitcher />
+         
 
         </div>
       

@@ -18,7 +18,8 @@ import {
 export function ThemeSwitcher() {
   const { setTheme } = useTheme()
 
-  return (
+  return ( 
+    <div style={{float : "inline-end"}}>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
@@ -39,5 +40,6 @@ export function ThemeSwitcher() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+    </div>
   )
 }

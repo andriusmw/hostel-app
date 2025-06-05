@@ -7,7 +7,8 @@ import "./globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import Link from "next/link";
-import Navbar from "@/components/navbar";
+import { CategoryProvider } from '../app/context/CategoryContext';
+
 
 /*------------------------------------------- CONSTS -------------------------------------*/
 /*----------------------------------------------------------------------------------------*/
@@ -39,8 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* el ThemeProvider envuelve a children para aplicarle el tema 
-          igual que react-router envuelve toda la app para que funcionen las redireciones en toda la app  */}
+        {/* el ThemeProvider envuelve a children para aplicarle el tema como un proveedor de contexto  */}
      
         <ThemeProvider
            attribute="class"
@@ -48,9 +48,11 @@ export default function RootLayout({
            enableSystem
            disableTransitionOnChange
         > 
-            <Navbar/>
+          <CategoryProvider>
+             {children}
+          </CategoryProvider>
            
-        {children}
+      
         </ThemeProvider>
       </body>
     </html>
