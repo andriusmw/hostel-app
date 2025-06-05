@@ -2,7 +2,8 @@
 //------------------------------------------------------------------------------------------
 
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -95,8 +96,9 @@ export default async function Home() {
               <p className="text-gray-500 text-center">No news found</p>
 
             ) : (
-              news.map((article, index) => (
+              news.map((article, index) => ( //creando lista de tarjetitas de noticias
                 //ponemos index como key porque en la doc de la api hemos visto que algunos id pueden venir como null
+                // no lleva id, hay "source_id" y ese encima puede venir null o repetido.
                 <Card key={index} className="rounded-lg overflow-hidden shadow-lg hover:shadow-2x1 transition-shadow"
                 style={{ margin: "5px", marginBottom: "10px" }}>
                    <div className="relative w-full h-48">
@@ -116,16 +118,22 @@ export default async function Home() {
                   </div>
 
                   <CardContent>
-                  <h2 className="text-xl font-semibold">{article.title}</h2>
-                  <p className="text-gray-600">{article.description || "Sin descripción"}</p>
-                  <Link
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
-                  >
-                    Read More
-                  </Link>
+                     <h2 className="text-xl font-semibold">{article.title}</h2>
+                     <p className="text-gray-600">{article.description || "Sin descripción"}</p>
+                    
+                     <Link
+                     // enviamos el url como identificador porque no tenemos otra cosa, el index puede cambiar si se
+                     // añaden noticias entonces la vista detalle no correspondería. 
+                       href={`/singleNew/${encodeURIComponent(article.url)}`}
+                      className="text-blue-500 hover:underline"
+                      >
+                      Read More
+                     </Link>
+                   
+                  </CardContent>
+                  <CardFooter>
+                 
+             
                   <p>  {/*Ajuste para mostrar la fecha y hora correctamente */}
                     {new Date(article.publishedAt).toLocaleString("en-EN", {
                         year: "numeric",
@@ -134,7 +142,7 @@ export default async function Home() {
                         hour: "2-digit",
                         minute: "2-digit",
                       })}</p>
-                  </CardContent>
+                  </CardFooter>
                
                 </Card>
 
