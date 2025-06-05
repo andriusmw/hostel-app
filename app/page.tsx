@@ -32,10 +32,16 @@ interface NewsApiResponse {
   articles: Article[];
 }
 
+// Función para añadir retraso
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+
 //-------------------------------------- EXPORT -----------------------------------------------
 //-------------------------------------------------------------------------------------------
 
 export default async function Home() {
+  let loading: boolean = true;
+
   // Construye la URL usando variables de entorno
   const baseUrl = process.env.BASE_URL;
   const source = process.env.SOURCE;
@@ -49,9 +55,11 @@ export default async function Home() {
 
   // Llamada a la API
   try {
+    //await delay(5000);
     const res = await fetch(url, { cache: "no-store" });
-                      // al añadir no-store simula SSR porque no lo guarda en el cliente.
-                      // carga datos frescos con cada llamada
+                       // en App Router ya se manejan las páginas por defecto como Server Side Components.
+                      // pero nos esforzamos en usar no-store por si acaso para simular SSR porque no lo 
+                      // guarda en el cliente. carga datos frescos con cada llamada
                       // carga desde el servidor. 
 
     // Verifica si la respuesta es exitosa
@@ -69,6 +77,7 @@ export default async function Home() {
 
     // Guarda los artículos
     news = data.articles;
+    loading = false
     //console.log(news)
   } catch (err) {
     console.error("Error fetching latest news:", err);
@@ -84,6 +93,8 @@ export default async function Home() {
         <h1 className="text-3xl md:text-4x1 font-bold tracking-tight text-rpimary 
           text-center mb-10" >
               BBC's News</h1>
+
+      {loading ? <p>Loading...</p> : null }  
 
           {/* Esto por si hay error */}
         {error ? ( 

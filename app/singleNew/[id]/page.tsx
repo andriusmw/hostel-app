@@ -44,8 +44,10 @@ export default async function SingleNew({ params }: SingleNewProps) {
     let error: string | undefined;
   
     try {
-      const res = await fetch(url, { next: { revalidate: 3600 } }); // ISR: revalida cada hora
-                        //fetch a la API 
+      const res = await fetch(url, { next: { revalidate: 3600 } }); 
+                        // en App Router ya se manejan las páginas por defecto como Server Side Components.
+                        //fetch a la API usando ISR con el revalidate para obtener los datos del servidor
+                        //en tiempo de compilación como getStaticProps + añadimos datos frescos cada hora. 
   
       if (!res.ok) {
         throw new Error(`Error at API: ${res.status} ${res.statusText}`);
@@ -61,6 +63,10 @@ export default async function SingleNew({ params }: SingleNewProps) {
       // Busca el artículo con el url coincidente, es lo que vamos a usar en el return.
       article = data.articles.find((art) => art.url === decodedUrl) || null;
 
+     // console.log(data.articles.map((art) => ({ url: art.url, content: art.content })));
+        // El contenido de la noticia viene truncado por la propia API; solo se muestran los
+        // X primeros caracteres.
+        
     } catch (err) {
         console.error("Error fetching article:", err);
         error = err instanceof Error ? err.message : "Error loading new";
