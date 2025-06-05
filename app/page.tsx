@@ -33,8 +33,6 @@ interface NewsApiResponse {
   articles: Article[];
 }
 
-// Función para añadir retraso
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
 //-------------------------------------- EXPORT -----------------------------------------------
@@ -54,9 +52,10 @@ export default async function Home() {
   let news: Article[] = [];
   let error: string | undefined;
 
-  // Llamada a la API
+
   try {
-    //await delay(5000);
+
+  // Llamada a la API
     const res = await fetch(url, { cache: "no-store" });
                        // en App Router ya se manejan las páginas por defecto como Server Side Components.
                       // pero nos esforzamos en usar no-store por si acaso para simular SSR porque no lo 
@@ -85,7 +84,7 @@ export default async function Home() {
     error = err instanceof Error ? err.message : "Error al cargar noticias";
   }
 
-  // Renderizado
+
   return (
     <section className="my-8 px-2 lg:px-16">
       {/* Estilos para centrar el contenido */}

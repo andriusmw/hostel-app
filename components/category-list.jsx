@@ -110,19 +110,8 @@ const CategoryList = () => {
          
           
             {data.articles && Array.isArray(data.articles) ? (
-            /*  data.articles.map((item, index) => (
-                <li key={index}>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <a href={item.url} target="_blank" rel="noopener noreferrer">
-                    Read More
-                  </a>
-                </li>
-              ))
- */
 
-              
-
+            
               data.articles.map((article, index) => ( //creando lista de tarjetitas de noticias
                 //ponemos index como key porque en la doc de la api hemos visto que algunos id pueden venir como null
                 // no lleva id, hay "source_id" y ese encima puede venir null o repetido.
