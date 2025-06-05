@@ -80,9 +80,9 @@ export default async function Home() {
       {/* Estilos para centrar el contenido */}
 
       
-        <h1 className="text-3x1 md:text-4x1 font-bold tracking-tight text-rpimary 
-          text-center mb-10">
-              Noticias de BBC News</h1>
+        <h1 className="text-3xl md:text-4x1 font-bold tracking-tight text-rpimary 
+          text-center mb-10" >
+              BBC's News</h1>
 
           {/* Esto por si hay error */}
         {error ? ( 
@@ -92,7 +92,7 @@ export default async function Home() {
 
             {/* Para vista vacía */}
             {news.length === 0 ? (
-              <p className="text-gray-500 text-center">No se encontraron noticias</p>
+              <p className="text-gray-500 text-center">No news found</p>
 
             ) : (
               news.map((article, index) => (
@@ -124,9 +124,16 @@ export default async function Home() {
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:underline"
                   >
-                    Leer más
+                    Read More
                   </Link>
-                  <p>{article.publishedAt}</p>
+                  <p>  {/*Ajuste para mostrar la fecha y hora correctamente */}
+                    {new Date(article.publishedAt).toLocaleString("en-EN", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}</p>
                   </CardContent>
                
                 </Card>
